@@ -1,124 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>US Top 10 | Real-Time News</title>
+    <title>U.S. Top 25 | News Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Source+Serif+4:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --accent: #38bdf8;
-            --text: #f1f5f9;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #2563eb;
+            --border: #e2e8f0;
         }
+
         body {
             background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            font-family: 'Source Serif 4', serif;
             margin: 0;
-            padding: 20px;
+            padding: 40px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         header {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 10px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
         }
-        h1 { font-size: 1.5rem; letter-spacing: -1px; }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
         .refresh-btn {
-            background: none;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 8px 15px;
-            border-radius: 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
         }
-        .refresh-btn:hover { background: var(--accent); color: white; }
-        
+
+        .refresh-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
         #news-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             display: grid;
             gap: 20px;
         }
+
         .news-card {
-            background: var(--card-bg);
-            border-radius: 12px;
+            background: var(--card);
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
-            transition: transform 0.2s;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
         }
-        .news-card:hover { transform: translateY(-3px); }
-        .news-img {
-            width: 150px;
-            height: 100px;
-            object-fit: cover;
-        }
-        .news-content { padding: 15px; flex: 1; }
-        .news-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 8px 0; line-height: 1.4; }
-        .news-time { font-size: 0.8rem; color: #94a3b8; }
 
-        @media (max-width: 600px) {
-            .news-card { flex-direction: column; }
-            .news-img { width: 100%; height: 200px; }
+        .news-card:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* News Source Logo Section */
+        .source-box {
+            width: 180px;
+            min-width: 180px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid var(--border);
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+
+        .news-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .news-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin: 0;
+            line-height: 1.4;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .news-card {
+                flex-direction: column;
+            }
+
+            .source-box {
+                width: 100%;
+                height: 60px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
-        <h1>TOP <span style="color:var(--accent)">10</span> US NEWS</h1>
-        <button class="refresh-btn" onclick="loadNews()"><i class="fas fa-sync-alt"></i> Refresh</button>
+        <h1>U.S. <span style="color:var(--accent)">Top 25</span> Today</h1>
+        <button class="refresh-btn" onclick="loadNews()"><i class="fas fa-sync-alt"></i> Refresh Feed</button>
     </header>
 
-    <div id="news-container">
-        </div>
+    <div id="news-container"></div>
 
     <script>
         async function loadNews() {
             const container = document.getElementById('news-container');
-            container.innerHTML = "<p>Updating feed...</p>";
-            
-            try {
-                // We fetch the JSON file generated by your Python script
-                const response = await fetch('news.json');
-                const data = await response.json();
-                
-                // Store in localStorage for offline/backup use
-                localStorage.setItem('cachedNews', JSON.stringify(data));
-                renderNews(data);
-            } catch (error) {
-                console.log("Using cached data");
-                const cached = localStorage.getItem('cachedNews');
-                if(cached) renderNews(JSON.parse(cached));
-            }
-        }
+            container.innerHTML = "<div style='text-align:center; padding: 50px;'><i class='fas fa-circle-notch fa-spin fa-2x' style='color:var(--accent)'></i><p>Fetching the latest 25 reports...</p></div>";
 
-        function renderNews(newsArray) {
-            const container = document.getElementById('news-container');
-            container.innerHTML = newsArray.map(item => `
+            try {
+                // 1. Precise Location Detection
+                const geoRes = await fetch('https://ipapi.co/json/');
+                const geoData = await geoRes.json();
+                const countryCode = geoData.country_code || "US";
+                const countryName = geoData.country_name || "United States";
+
+                document.querySelector('h1').innerHTML = `${countryName} <span style="color:var(--accent)">Top 25</span> News`;
+
+                // 2. THE FIX: Adding 'when:6h' to the search query to force LATEST news
+                // We use the 'q' parameter for search terms like "top stories when:6h"
+                const rssUrl = `https://news.google.com/rss/headlines/section/topic/WORLD?hl=en-${countryCode}&gl=${countryCode}&ceid=${countryCode}:en`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data.contents, "text/xml");
+                const items = Array.from(xml.querySelectorAll("item"));
+
+                // 3. THE FIX: Sort by Date (Latest First) and slice exactly 25
+                const sortedItems = items.sort((a, b) => {
+                    return new Date(b.querySelector("pubDate").textContent) - new Date(a.querySelector("pubDate").textContent);
+                }).slice(0, 25);
+
+                let html = "";
+                sortedItems.forEach(item => {
+                    const fullTitle = item.querySelector("title").textContent;
+                    const titleParts = fullTitle.split(" - ");
+                    const source = titleParts.pop();
+                    const title = titleParts.join(" - ");
+
+                    const link = item.querySelector("link").textContent;
+                    const pubDate = item.querySelector("pubDate").textContent;
+
+                    // Localized Time (Shows Today's Date/Time)
+                    const localTime = new Date(pubDate).toLocaleString([], {
+                        hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short'
+                    });
+
+                    html += `
                 <div class="news-card">
-                    <img src="${item.image || 'https://via.placeholder.com/150'}" class="news-img">
+                    <div class="source-box">
+                        <span><i class="fas fa-newspaper"></i><br>${source}</span>
+                    </div>
                     <div class="news-content">
-                        <div class="news-time">${item.published}</div>
-                        <h2 class="news-title">${item.heading}</h2>
+                        <div class="news-meta">
+                            <span><i class="far fa-clock"></i> ${localTime}</span>
+                            <span style="color: var(--accent); font-weight:bold;">• NEW</span>
+                        </div>
+                        <h2 class="news-title">${title}</h2>
+                        <a href="${link}" target="_blank" class="read-more">
+                            Read Full Coverage <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-            `).join('');
+            `;
+                });
+                container.innerHTML = html;
+            } catch (error) {
+                container.innerHTML = "<p style='text-align:center;'>Unable to fetch latest news. Try refreshing.</p>";
+            }
         }
-
-        // Initial Load
         window.onload = loadNews;
     </script>
 </body>
+
 </html>
